@@ -1,6 +1,4 @@
-# README.md for `vid2captionsai`
-
-## Summary
+# `vid2captionsai`
 
 `vid2captionsai` is a Python-based tool designed to prepare videos for use with [captions.ai](https://www.captions.ai/), a platform focused on generating captions for audio and video content. 
 
@@ -98,4 +96,4 @@ FLAGS
 ## Credits & License
 
 - `vid2captionsai` © 2023 Adam Twardoch
-- Published under the [Apache-2.0](./LICENSE.txt) license
+- Published under the [Apache-2.0](https://github.com/twardoch/vid2captionsai/blob/main/LICENSE.txt) license
