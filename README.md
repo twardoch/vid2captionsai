@@ -4,13 +4,17 @@
 
 [captions.ai](https://www.captions.ai/) allows you to burn nice animated “hard subtitles” into your video. You upload the video and you get the same video but with the subtitles burned in. But what if you’d prefer to have some control? `vid2captionsai` offers two commands that help you get just the subtitles, as a separate video with transparency (without your original video content). 
 
-![vid2captionsai.jpg](https://twardoch.github.io/vid2captionsai/assets/vid2captionsai.jpg)
-
 You can then import that new video into your video editor, overlay it on top of your original video, scale, trim, edit, and have the subtitles rendered on top of your original video the way you want it. 
  
 ## Installation
 
 Ensure that Python 3.10 or higher is installed on your system, and run: 
+
+```bash
+python3 -m pip install --upgrade vid2captionsai
+```
+
+Or with the development version: 
 
 ```bash
 python3 -m pip install --upgrade git+https://github.com/twardoch/vid2captionsai
@@ -95,7 +99,19 @@ FLAGS
         Default: None
 ```
 
+## Example
+
+![vid2captionsai.jpg](https://twardoch.github.io/vid2captionsai/assets/vid2captionsai.jpg)
+
+This image shows the result of the tool + captions.ai: 
+
+1. `vid2captionsai blank` was used to convert the original video to a new “blank” video in the 2160x720 resolution, against a black background. This resolution is the width of a 4K video and the height of 1/3 of a 4K video, which makes the video a good “container” for the subtitles. 
+2. Captions.ai was used to added subtitles to that “blank” video. 
+3. Captions.ai was used to export a new video, again at 2160x720 resolution. The exported video has captions.ai-made subtitles hard-burned onto the black background. 
+4. `vid2captionsai mask` was used to convert the captions.ai-exported black-background video into a video where the black color is made transparent, and the dark subtitle backdrops are made a little bit semitransparent. 
+5. The resulting transparent video is dropped into the video editor (this is the part shown selected in the image), where it can be scaled and positioned freely. 
+
 ## Credits & License
 
-- `vid2captionsai` © 2023 Adam Twardoch
+- [`vid2captionsai`](https://pypi.org/project/vid2captionsai/) © 2023 Adam Twardoch
 - Published under the [Apache-2.0](https://github.com/twardoch/vid2captionsai/blob/main/LICENSE.txt) license
