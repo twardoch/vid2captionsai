@@ -2,11 +2,11 @@
 
 `vid2captionsai` is a Python-based tool designed to prepare videos for use with [captions.ai](https://www.captions.ai/), a platform focused on generating captions for audio and video content. 
 
-[captions.ai](https://www.captions.ai/) allows you to burn nice animated “hard subtitles” into your video. You upload the video and you get the same video but with the subtitles burned in. 
+[captions.ai](https://www.captions.ai/) allows you to burn nice animated “hard subtitles” into your video. You upload the video and you get the same video but with the subtitles burned in. But what if you’d prefer to have some control? `vid2captionsai` offers two commands that help you get just the subtitles, as a separate video with transparency (without your original video content). 
 
-![vid2captionsai.jpg](https://twardoch.github.io/vid2captionsai/assets/vid2captionsai.jpg)
+![vid2captionsai.jpg](https://twardoch.github.io/vid2captionsai/assets/vid2captionsai.jpg){ .small }
 
-But what if you’d prefer to have some control? `vid2captionsai` offers two commands that help you get just the subtitles, as a separate video with transparency (without your original video content). You can then import that new video into your video editor, overlay it on top of your original video, scale, trim, edit, and have the subtitles rendered on top of your original video the way you want it. 
+You can then import that new video into your video editor, overlay it on top of your original video, scale, trim, edit, and have the subtitles rendered on top of your original video the way you want it. 
  
 ## Installation
 
