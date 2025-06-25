@@ -8,6 +8,16 @@ import static_ffmpeg
 
 
 def setup_logging(verbose: bool = False):
+    """
+    Set up logging configuration based on the verbosity level.
+
+    Args:
+        verbose (bool, optional): Flag indicating whether to enable verbose logging. Defaults to False.
+
+    Returns:
+        str: The logging level for ffmpeg.
+
+    """
     if verbose:
         logging_level = logging.INFO
         ffmpeg_level = "info"
@@ -19,12 +29,37 @@ def setup_logging(verbose: bool = False):
 
 
 class PrepAudioVideo:
+    """
+    A class for preparing audio and video files.
+
+    Args:
+        ffmpeg_path (str | Path | None): The path to the ffmpeg executable. If None, the default system path will be used.
+        ffprobe_path (str | Path | None): The path to the ffprobe executable. If None, the default system path will be used.
+        verbose (bool): Whether to enable verbose logging. Defaults to False.
+
+    Attributes:
+        _ffmpeg_options (list): Options to be passed to the ffmpeg command.
+        _ffprobe_options (list): Options to be passed to the ffprobe command.
+        _ffmpeg_path (Path): The resolved path to the ffmpeg executable.
+        _ffprobe_path (Path): The resolved path to the ffprobe executable.
+        _ffmpeg_run (list): The complete ffmpeg command to be executed.
+        _ffprobe_run (list): The complete ffprobe command to be executed.
+    """
+
     def __init__(
         self,
         ffmpeg_path: str | Path | None = None,
         ffprobe_path: str | Path | None = None,
         verbose: bool = False,
     ):
+        """
+        Initializes the Vid2CaptionsAI object.
+
+        Args:
+            ffmpeg_path (str | Path | None, optional): Path to the ffmpeg executable. Defaults to None.
+            ffprobe_path (str | Path | None, optional): Path to the ffprobe executable. Defaults to None.
+            verbose (bool, optional): Whether to enable verbose logging. Defaults to False.
+        """
         ffmpeg_level = setup_logging(verbose)
         self._ffmpeg_options = [
             "-nostdin",
@@ -55,6 +90,17 @@ class PrepAudioVideo:
         output_path: str | Path | None = None,
         suffix: str | None = None,
     ) -> Path:
+        """
+        Prepare input and output paths for the video-to-captions conversion.
+
+        Args:
+            input_path (str | Path | None): Path to the input video file.
+            output_path (str | Path | None): Path to the output captions file.
+            suffix (str | None): Suffix to be appended to the input file name for the output file.
+
+        Returns:
+            Path: Tuple containing the resolved input and output paths.
+        """
         return (
             Path(input_path).resolve(),
             Path(output_path).resolve()
@@ -68,7 +114,19 @@ class PrepAudioVideo:
         color: str = "000000",
         width: int = 2160,
         height: int = 720,
-    ):
+    ) -> Path:
+        """
+        Creates a blank video with the original audio from the given input video file.
+
+        Args:
+            input_path (str | Path): The path to the input video file.
+            color (str, optional): The color of the blank video in hexadecimal format. Defaults to "000000".
+            width (int, optional): The width of the blank video in pixels. Defaults to 2160.
+            height (int, optional): The height of the blank video in pixels. Defaults to 720.
+
+        Returns:
+            Path: The path to the generated blank video file.
+        """
         input_path, _ = self._prep_paths(input_path)
         output_path = Path(input_path).parent / f"{Path(input_path).stem}-blank.mp4"
         logging.info(f"Creating blank video with original audio from: {input_path}")
@@ -142,40 +200,17 @@ class PrepAudioVideo:
         tolerance: float = 0.01,
         fps: int | None = None,
         output_path: str | Path | None = None,
-    ):
-        input_path, output_path = self._prep_paths(
-            input_path, output_path, "-alpha.mov"
-        )
-        logging.info(
-            f"Changing #{color} with tolerance {tolerance} to transparent in: {input_path}"
-        )
+    ) -> Path:
+        """
+        Applies a color key mask to a video file.
 
-        # Build the basic ffmpeg command
-        _ffmpeg_command = self._ffmpeg_run + [
-            "-i",
-            input_path,
-            "-an",  # This option removes the audio stream
-            "-vf",
-            f"colorkey=0x{color}:{tolerance}:0.1",
-            "-c:v",
-            "prores_ks",
-            "-profile:v",
-            "4444",
-            "-pix_fmt",
-            "yuva444p10le",
-        ]
+        Args:
+            input_path: Path to the input video file.
+            color: Color to be masked in hexadecimal format. Defaults to "000000".
+            tolerance: Tolerance level for color matching. Defaults to 0.01.
+            fps: Frames per second of the output video. Defaults to None.
+            output_path: Path to save the output video file. Defaults to None.
 
-        # Add fps transcoding if fps is specified
-        if fps:
-            _ffmpeg_command.extend(["-r", str(fps)])
-            str_fps = f"{fps}"
-        else:
-            str_fps = "original"
-
-        # Add the output path to the command
-        _ffmpeg_command.append(output_path)
-
-        # Execute the command
-        subprocess.run(_ffmpeg_command)
-        logging.info(f"Video with {str_fps} fps saved: {output_path}")
-        return output_path
+        Returns:
+            Path to the output video file.
+        """
