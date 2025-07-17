@@ -25,18 +25,32 @@ This tool is for content creators, video editors, and anyone using captions.ai w
 
 ### Prerequisites
 
-*   Python 3.10 or higher.
+*   Python 3.10 or higher (for Python installation method).
 *   `ffmpeg` and `ffprobe`: `vid2captionsai` bundles `ffmpeg` and `ffprobe` using `static-ffmpeg`, so you typically don't need to install them separately. However, if you have a specific version you'd like to use, ensure it's in your system's PATH or provide the path when using `vid2captionsai` programmatically.
 
-### Standard Installation
+### Option 1: Download Pre-built Binary (Recommended)
 
-To install the latest stable version from PyPI, run:
+Download the latest binary for your platform from the [releases page](https://github.com/twardoch/vid2captionsai/releases):
+
+- **Linux**: `vid2captionsai-linux-x64`
+- **Windows**: `vid2captionsai-windows-x64.exe`
+- **macOS**: `vid2captionsai-macos-x64`
+
+Make the binary executable (Linux/macOS):
+```bash
+chmod +x vid2captionsai-linux-x64
+./vid2captionsai-linux-x64 --help
+```
+
+### Option 2: Install from PyPI
+
+To install the latest stable version from PyPI:
 
 ```bash
 python3 -m pip install --upgrade vid2captionsai
 ```
 
-### Development Version
+### Option 3: Development Version
 
 To install the latest development version directly from GitHub:
 
