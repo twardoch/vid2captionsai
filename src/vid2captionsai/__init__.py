@@ -11,6 +11,14 @@ try:
     dist_name = __name__
     __version__ = version(dist_name)
 except PackageNotFoundError:  # pragma: no cover
-    __version__ = "unknown"
+    try:
+        from ._version import __version__
+    except ImportError:
+        __version__ = "unknown"
 finally:
     del version, PackageNotFoundError
+
+# Import main class for easy access
+from .vid2captionsai import PrepAudioVideo
+
+__all__ = ["PrepAudioVideo", "__version__"]
